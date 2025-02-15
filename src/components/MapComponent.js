@@ -13,8 +13,9 @@ const center = {
 
 export default function MapComponent({ pharmacies }) {
   const { isLoaded, loadError } = useLoadScript({
-    googleMapsApiKey: "AIzaSyD9EZlx60-tU2d7qUrRZqybDmAy2b-JAQ8",
+    googleMapsApiKey: process.env.REACT_APP_GOOGLE_MAPS_API_KEY,
   });
+
 
   const [hoveredPharmacy, setHoveredPharmacy] = useState(null);
 
@@ -45,3 +46,7 @@ export default function MapComponent({ pharmacies }) {
     </GoogleMap>
   );
 }
+
+// Ensure .env configuration is correct
+// Create a .env file in your project's root directory and add:
+// REACT_APP_GOOGLE_MAPS_API_KEY=your_google_maps_api_key_here

@@ -3,8 +3,9 @@ import { initializeApp } from "firebase/app";
 import { getFirestore } from "firebase/firestore";
 import { getAuth } from "firebase/auth";
 
+
 const firebaseConfig = {
-    apiKey: "AIzaSyCkQwjCxhxWv7bv-_stBFvQeacOeXbjaDY",
+    apiKey: process.env.REACT_APP_FIREBASE_API_KEY,
     authDomain: "pharmafind-rwanda.firebaseapp.com",
     projectId: "pharmafind-rwanda",
     storageBucket: "pharmafind-rwanda.firebasestorage.app",
