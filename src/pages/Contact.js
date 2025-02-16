@@ -1,11 +1,24 @@
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import { FiMail, FiPhone, FiMapPin } from "react-icons/fi";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import emailjs from "emailjs-com";
 
 export default function Contact() {
   const [formData, setFormData] = useState({ name: "", email: "", message: "" });
   const [submitted, setSubmitted] = useState(false);
+
+  // Get EmailJS credentials from environment variables
+  const PUBLIC_KEY_EMAILJS = process.env.REACT_APP_PUBLIC_KEY_EMAILJS;
+  const EMAIL_SERVICE_ID = process.env.REACT_APP_EMAIL_SERVICE_ID;
+  const TEMPLATE_EMAIL = process.env.REACT_APP_TEMPLATE_EMAIL;
+
+  // Initialize EmailJS with your Public Key when the component mounts
+  useEffect(() => {
+    if (PUBLIC_KEY_EMAILJS) {
+      emailjs.init(PUBLIC_KEY_EMAILJS); // Initializes EmailJS with the Public Key
+    }
+  }, [PUBLIC_KEY_EMAILJS]);
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -13,14 +26,37 @@ export default function Contact() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    setSubmitted(true);
-    setFormData({ name: "", email: "", message: "" });
+
+    // Ensure that Service ID and Template ID are available before sending
+    if (!EMAIL_SERVICE_ID || !TEMPLATE_EMAIL) {
+      console.error("Service ID or Template ID is missing.");
+      return;
+    }
+
+    // Send the email using EmailJS
+    emailjs
+      .sendForm(
+        EMAIL_SERVICE_ID,     // EmailJS Service ID
+        TEMPLATE_EMAIL,       // EmailJS Template ID
+        e.target,             // The form element
+      )
+      .then(
+        (result) => {
+          console.log(result.text);
+          setSubmitted(true);
+          setFormData({ name: "", email: "", message: "" }); // Reset form
+        },
+        (error) => {
+          console.log(error.text);
+          setSubmitted(false); // Optional: handle error state
+        }
+      );
   };
 
   return (
     <div className="bg-gray-100 min-h-screen">
       <Navbar />
-      
+
       {/* Hero Section */}
       <div className="relative bg-[#1E3A8A] text-white py-20 px-6 text-center">
         <h1 className="text-4xl font-bold">Contact Us</h1>
@@ -89,7 +125,7 @@ export default function Contact() {
           </form>
         </div>
       </div>
-      
+
       <Footer />
     </div>
   );
