@@ -89,7 +89,7 @@ export default function PharmacyDetailPage() {
               </p>
               <p className="text-lg text-gray-600 flex items-center space-x-2">
                 <FaMapMarkerAlt className="text-gray-600" />
-                <span>{pharmacy.PROVINCE}</span>
+                <span>{pharmacy.PROVINCE}-{pharmacy.DISTRICT},  {pharmacy.SECTOR}</span>
               </p>
               <div className="flex items-center space-x-2 mt-4">
                 <p className="text-lg font-semibold text-green-600">Stock: </p>
@@ -168,7 +168,7 @@ export default function PharmacyDetailPage() {
               Pharmacy Location
             </h2>
             <div className="rounded-xl overflow-hidden shadow-lg">
-              <MapComponent pharmacies={pharmacy} /> {/* Pass pharmacy details to the map */}
+              <MapComponent pharmacies={pharmacy} /> 
             </div>
           </div>
         )}

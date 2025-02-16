@@ -34,8 +34,10 @@ export default function Navbar() {
         <div className="hidden md:flex items-center space-x-6">
           <button onClick={() => navigate("/")} className="text-white hover:text-gray-300 transition">Home</button>
           <button onClick={() => navigate("/about")} className="text-white hover:text-gray-300 transition">About</button>
+         
+          <button onClick={() => navigate("/contact")} className="text-white hover:text-gray-300 transition">Contact US</button>
           <button onClick={() => navigate("/faq")} className="text-white hover:text-gray-300 transition">FAQ</button>
-          <button onClick={() => navigate("/contact")} className="text-white hover:text-gray-300 transition">Contact</button>
+
           {isAuthenticated && (
             <button onClick={() => navigate("/admin")} className="text-white hover:text-gray-300 transition">Admin</button>
           )}

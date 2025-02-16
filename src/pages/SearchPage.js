@@ -1,4 +1,4 @@
-import { useEffect, useState, useMemo, useRef } from "react";
+import { useEffect, useState, useMemo } from "react";
 import { collection, getDocs } from "firebase/firestore";
 import { db } from "../firebase";
 import { FiHome, FiGlobe, FiSearch, FiHeart, FiPlus } from "react-icons/fi";
@@ -9,21 +9,17 @@ import PharmacyCard from "../components/PharmacyCard";
 import Footer from "../components/Footer";
 import heroImage from "../assets/pharmacy.jpeg";
 import { ClipLoader } from "react-spinners";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import ExtraFeatureLinks from "../components/ExtraFeatures";
 import Pagination from "../components/Pagination";
 import StatisticsSection from "../components/StatisticsSection";
-import MapComponent from "../components/MapComponent";
 
-export default function Home() {
+export default function SearchPage() {
   const [pharmacies, setPharmacies] = useState([]);
   const [filteredPharmacies, setFilteredPharmacies] = useState([]);
   const [searchQuery, setSearchQuery] = useState("");
   const [message, setMessage] = useState("");
   const [loading, setLoading] = useState(true);
-
-  const mapRef = useRef(null); // Reference for the map section
-  const navigate = useNavigate();
 
   const [totalPharmacies, setTotalPharmacies] = useState(0);
   const [uniqueProvinces, setUniqueProvinces] = useState(0);
@@ -68,7 +64,7 @@ export default function Home() {
     },
     {
       icon: FiGlobe,
-      iconColor: "text-blue-600",
+      iconColor: "text-green-600",
       value: uniqueProvinces,
       label: "Provinces Covered",
     },
@@ -80,7 +76,7 @@ export default function Home() {
     },
     {
       icon: FiGlobe,
-      iconColor: "text-blue-600",
+      iconColor: "text-orange-600",
       value: uniqueSectors,
       label: "Sectors Covered",
     },
@@ -176,74 +172,43 @@ export default function Home() {
         </div>
       </div>
 
-      {/* Introduction Section */}
-      {!searchQuery && (
-        <div className="container mx-auto px-6 mt-12 text-center">
-          <h2 className="text-3xl font-semibold text-gray-800">
-            Welcome to PharmaFind
-          </h2>
-          <p className="text-lg text-gray-600 mt-4 max-w-3xl mx-auto">
-            On PharmaFind, you can search for licensed pharmacies across Rwanda,
-            access detailed pharmacy information, and explore useful statistics
-            to help you make informed healthcare decisions. Our platform bridges
-            the gap between patients and healthcare providers, ensuring timely
-            access to medications and trusted pharmacy services.
-          </p>
-          <button 
-        onClick={() => navigate("/pharmacies")} 
-        className="bg-blue-500 text-white px-4 py-2 rounded mt-6 hover:bg-blue-600 transition"
-      >
-        Explore Pharmacies
-      </button>
-        </div>
-      )}
-
-      {/* Statistics Section */}
-      {!searchQuery && <StatisticsSection stats={statsData} />}
-
-    
       {/* Pharmacy List Section */}
-      {searchQuery && (
-        <div className="container mx-auto px-6 mt-10">
-          <h2 className="text-3xl font-semibold text-gray-800 mb-6">
-            {searchQuery
-              ? `Results Found (${filteredPharmacies.length})`
-              : "All Licensed Pharmacies in Rwanda"}
-          </h2>
+     <div className="container mx-auto px-6 mt-10">
+        <h2 className="text-3xl font-semibold text-gray-800 mb-6">
+          {searchQuery
+            ? `Results Found (${filteredPharmacies.length})`
+            : "All Licensed Pharmacies in Rwanda"}
+        </h2>
 
-          {loading ? (
-            <div className="flex justify-center items-center py-16">
-              <ClipLoader color="#1D4ED8" loading={loading} size={50} />
-            </div>
-          ) : displayedPharmacies.length > 0 ? (
-            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8">
-              {displayedPharmacies.map((pharmacy) => (
-                <PharmacyCard key={pharmacy.id} pharmacy={pharmacy} />
-              ))}
-            </div>
-          ) : (
-            <div className="text-center py-16">
-              <FiSearch className="text-gray-400 mx-auto" size={50} />
-              <p className="text-gray-600 mt-4 text-lg">
-                No pharmacies found. Try searching with different keywords.
-              </p>
-            </div>
-          )}
-        </div>
-      )}
+        {loading ? (
+          <div className="flex justify-center items-center py-16">
+            <ClipLoader color="#1D4ED8" loading={loading} size={50} />
+          </div>
+        ) : displayedPharmacies.length > 0 ? (
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8">
+            {displayedPharmacies.map((pharmacy) => (
+              <PharmacyCard key={pharmacy.id} pharmacy={pharmacy} />
+            ))}
+          </div>
+        ) : (
+          <div className="text-center py-16">
+            <FiSearch className="text-gray-400 mx-auto" size={50} />
+            <p className="text-gray-600 mt-4 text-lg">
+              No pharmacies found. Try searching with different keywords.
+            </p>
+          </div>
+        )}
+      </div>
 
       {/* Pagination */}
-      {searchQuery && (
-        <Pagination
-          currentPage={currentPage}
-          totalPages={totalPages}
-          setCurrentPage={setCurrentPage}
-          filteredPharmacies={filteredPharmacies}
-        />
-      )}
+      <Pagination
+        currentPage={currentPage}
+        totalPages={totalPages}
+        setCurrentPage={setCurrentPage}
+        filteredPharmacies={filteredPharmacies}
+      />
 
-      {/* Extra Links Section */}
-      {!searchQuery && <ExtraFeatureLinks />}
+   
 
       {/* Footer */}
       <Footer />

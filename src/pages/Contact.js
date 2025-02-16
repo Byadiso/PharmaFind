@@ -87,9 +87,10 @@ export default function Contact() {
       {/* Contact Form */}
       <div className="container mx-auto px-6 lg:px-12 mt-12 max-w-3xl">
         <div className="bg-white shadow-lg rounded-lg p-8">
-          <h2 className="text-2xl font-semibold text-gray-800 text-center">Send Us a Message</h2>
-          {submitted && <p className="text-green-600 text-center mt-2">Thank you! We will get back to you soon.</p>}
-          <form className="mt-6" onSubmit={handleSubmit}>
+          {!submitted && <h2 className="text-2xl font-semibold text-gray-800 text-center">Send Us a Message</h2>}
+          {submitted && <h2 className="text-2xl font-semibold text-gray-800 text-center">Thank you!</h2>}
+          {submitted && <p className="text-green-600 text-center mt-2"> We will get back to you soon.</p>}
+          {!submitted && <form className="mt-6" onSubmit={handleSubmit}>
             <input
               type="text"
               name="name"
@@ -122,7 +123,7 @@ export default function Contact() {
             >
               Send Message
             </button>
-          </form>
+          </form>}
         </div>
       </div>
 

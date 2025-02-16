@@ -11,6 +11,11 @@ import UploadPharmacies from "./Helper/UploadPharmacies";
 import About from "./pages/About";
 import FAQ from "./pages/FAQ";
 import Contact from "./pages/Contact";
+import EducationalHub from "./pages/Educationalhub";
+import OpenDataTransparency from "./pages/OpenData";
+import DataExport from "./pages/DataExport";
+import SearchPage from "./pages/SearchPage";
+import ListPharmacies from "./pages/ListPharmacies";
 
 function App() {
   return (
@@ -25,6 +30,14 @@ function App() {
         <Route path="/about" element={<About />} />
         <Route path="/faq" element={<FAQ />} />
         <Route path="/Contact" element={<Contact />} />
+
+        <Route path="/pharmacies/Search" element={<SearchPage />} />
+        <Route path="/pharmacies" element={<ListPharmacies />} />
+
+        {/* extra */}
+        <Route path="/educational-resources" element={<EducationalHub />} />
+        <Route path="/open-data" element={<OpenDataTransparency />} />
+        <Route path="/download-data" element={<DataExport />} />
 
         
 
