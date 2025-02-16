@@ -7,10 +7,10 @@ const PharmacyCard = ({ pharmacy }) => {
       <div className="p-6 space-y-4">
         <div className="flex justify-between items-center">
           <h3 className="text-xl font-semibold text-gray-800">{pharmacy.NAME_OF_INSTITUTION}</h3>
-          <div className="flex items-center space-x-1">
+          {/* <div className="flex items-center space-x-1">
             <FiHeart className="text-red-500" size={20} />
             <span className="text-sm text-gray-500">Favorites</span>
-          </div>
+          </div> */}
         </div>
 
         <div className="flex items-center space-x-2 text-sm text-gray-500">

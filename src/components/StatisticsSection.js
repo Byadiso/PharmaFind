@@ -1,7 +1,7 @@
 import { useNavigate } from "react-router-dom";
 
 const StatisticsSection = ({ stats }) => {
-  const navigate = useNavigate();
+ 
 
   return (
     <div className="container mx-auto px-6 mt-16 text-center">

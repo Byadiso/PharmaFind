@@ -22,7 +22,6 @@ export default function Home() {
   const [message, setMessage] = useState("");
   const [loading, setLoading] = useState(true);
 
-  const mapRef = useRef(null); // Reference for the map section
   const navigate = useNavigate();
 
   const [totalPharmacies, setTotalPharmacies] = useState(0);
@@ -182,32 +181,29 @@ export default function Home() {
           <h2 className="text-3xl font-semibold text-gray-800">
             Welcome to PharmaFind
           </h2>
-          <p className="text-lg text-gray-600 mt-4 max-w-3xl mx-auto">
-            On PharmaFind, you can search for licensed pharmacies across Rwanda,
-            access detailed pharmacy information, and explore useful statistics
-            to help you make informed healthcare decisions. Our platform bridges
-            the gap between patients and healthcare providers, ensuring timely
-            access to medications and trusted pharmacy services.
+          <p className="text-md text-gray-600 mt-4 max-w-3xl mx-auto">
+            PharmaFind helps you quickly find licensed pharmacies in your area
+            across Rwanda. Easily search, check pharmacy details, and locate the
+            nearest options—all in one place
           </p>
-          <button 
-        onClick={() => navigate("/pharmacies")} 
-        className="bg-blue-500 text-white px-4 py-2 rounded mt-6 hover:bg-blue-600 transition"
-      >
-        Explore Pharmacies
-      </button>
+          <button
+            onClick={() => navigate("/pharmacies")}
+            className="bg-blue-500 text-white px-4 py-2 rounded mt-6 hover:bg-blue-600 transition"
+          >
+            Discover Rwanda Pharmacies
+          </button>
         </div>
       )}
 
       {/* Statistics Section */}
       {!searchQuery && <StatisticsSection stats={statsData} />}
 
-    
       {/* Pharmacy List Section */}
       {searchQuery && (
         <div className="container mx-auto px-6 mt-10">
           <h2 className="text-3xl font-semibold text-gray-800 mb-6">
             {searchQuery
-              ? `Results Found (${filteredPharmacies.length})`
+              ? `We Found (${filteredPharmacies.length}) Pharmacies for you!`
               : "All Licensed Pharmacies in Rwanda"}
           </h2>
 

@@ -6,11 +6,11 @@ const ExtraFeatureLinks = () => {
   return (
     <div className="container mx-auto px-6 mt-24">
       {/* Title/Introduction */}
-      <div className="text-center mb-12">
+      <div className="text-center mb-8">
         <h2 className="text-3xl font-semibold text-gray-800">
           Explore Additional Features
         </h2>
-        <p className="text-lg text-gray-500 mt-4 max-w-xl mx-auto">
+        <p className="text-md text-gray-500 mt-4 max-w-xl mx-auto">
           Access educational resources, open data, and downloadable files to get
           more from our platform.
         </p>

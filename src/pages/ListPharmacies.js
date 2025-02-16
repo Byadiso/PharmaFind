@@ -177,7 +177,7 @@ export default function ListPharmacies() {
         <h2 className="text-3xl font-semibold text-gray-800 mb-6">
           {searchQuery
             ? `Results Found (${filteredPharmacies.length})`
-            : "All Licensed Pharmacies in Rwanda"}
+            : `All ${totalPharmacies} Licensed Pharmacies in Rwanda`}
         </h2>
 
         {loading ? (
