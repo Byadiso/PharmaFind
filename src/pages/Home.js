@@ -18,9 +18,30 @@ export default function Home() {
   
   const [totalPharmacies, setTotalPharmacies] = useState(0);
   const [uniqueProvinces, setUniqueProvinces] = useState(0);
+  const [uniqueDistricts, setUniqueDistricts] = useState(0);
+  const [uniqueSectors, setUniqueSectors] = useState(0);
   
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 6;
+
+  // Normalize province names only for statistics calculation
+  const normalizeProvinceForStatistics = (province) => {
+    if (province) {
+     
+      const normalizedProvince = province.toUpperCase();
+      
+      if (normalizedProvince.includes("SOUTHERN") || normalizedProvince === "SOUTH") {
+        return "SOUTHERN";
+      }
+      if (normalizedProvince.includes("KIGALI") || normalizedProvince === "KIGALI CITY") {
+        return "KIGALI";
+      }
+      if (normalizedProvince.includes("EASTERN") || normalizedProvince === "EASTERN PROVINCE") {
+        return "EASTERN";
+      }
+    }
+    return province; // Keep original value for pharmacy listing
+  };
 
   useEffect(() => {
     const fetchPharmacies = async () => {
@@ -36,8 +57,17 @@ export default function Home() {
         setFilteredPharmacies(pharmaciesData);
         setTotalPharmacies(pharmaciesData.length);
 
-        const provinces = new Set(pharmaciesData.map((p) => p.PROVINCE));
-        setUniqueProvinces(provinces.size);
+        // Normalize provinces only for statistics
+        const normalizedProvinces = new Set(pharmaciesData.map((p) => normalizeProvinceForStatistics(p.PROVINCE)));
+        setUniqueProvinces(normalizedProvinces.size);
+        console.log(normalizedProvinces)
+
+        const districts = new Set(pharmaciesData.map((p) => p.DISTRICT));
+        setUniqueDistricts(districts.size);
+
+        const sectors = new Set(pharmaciesData.map((p) => p.SECTOR));
+        setUniqueSectors(sectors.size);
+
       } catch (error) {
         setMessage("Failed to load pharmacies. Please try again.");
         console.error("Error fetching pharmacies: ", error);
@@ -100,7 +130,7 @@ export default function Home() {
 
       {!searchQuery && (
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 mt-10">
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
             <div className="bg-white shadow-md rounded-lg p-6 flex items-center space-x-4">
               <FiHome className="text-blue-600" size={40} />
               <div>
@@ -113,6 +143,20 @@ export default function Home() {
               <div>
                 <h2 className="text-2xl font-semibold text-gray-800">{uniqueProvinces}</h2>
                 <p className="text-gray-500">Provinces Covered</p>
+              </div>
+            </div>
+            <div className="bg-white shadow-md rounded-lg p-6 flex items-center space-x-4">
+              <FiGlobe className="text-blue-600" size={40} />
+              <div>
+                <h2 className="text-2xl font-semibold text-gray-800">{uniqueDistricts}</h2>
+                <p className="text-gray-500">Districts Covered</p>
+              </div>
+            </div>
+            <div className="bg-white shadow-md rounded-lg p-6 flex items-center space-x-4">
+              <FiGlobe className="text-orange-600" size={40} />
+              <div>
+                <h2 className="text-2xl font-semibold text-gray-800">{uniqueSectors}</h2>
+                <p className="text-gray-500">Sectors Covered</p>
               </div>
             </div>
           </div>
