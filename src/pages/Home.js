@@ -1,12 +1,13 @@
 import { useEffect, useState, useMemo } from "react";
 import { collection, getDocs } from "firebase/firestore";
 import { db } from "../firebase";
-import { FiHome, FiGlobe } from "react-icons/fi";
+import { FiHome, FiGlobe, FiSearch } from "react-icons/fi";
 import Navbar from "../components/Navbar";
 import SearchBar from "../components/SearchBar";
 import PharmacyCard from "../components/PharmacyCard";
 import Footer from "../components/Footer";
 import heroImage from "../assets/pharmacy.jpeg";
+import { ClipLoader } from "react-spinners";  // Import spinner component
 
 export default function Home() {
   const [pharmacies, setPharmacies] = useState([]);
@@ -14,10 +15,10 @@ export default function Home() {
   const [searchQuery, setSearchQuery] = useState("");
   const [message, setMessage] = useState("");
   const [loading, setLoading] = useState(true);
-
+  
   const [totalPharmacies, setTotalPharmacies] = useState(0);
   const [uniqueProvinces, setUniqueProvinces] = useState(0);
-
+  
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 6;
 
@@ -47,7 +48,6 @@ export default function Home() {
     fetchPharmacies();
   }, []);
 
-  // Search logic
   useEffect(() => {
     if (!searchQuery.trim()) {
       setFilteredPharmacies(pharmacies);
@@ -55,8 +55,14 @@ export default function Home() {
     }
 
     const filtered = pharmacies.filter((pharmacy) =>
-      pharmacy.NAME_OF_INSTITUTION.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      pharmacy.PROVINCE.toLowerCase().includes(searchQuery.toLowerCase())
+      [
+        pharmacy.NAME_OF_INSTITUTION,
+        pharmacy.PROVINCE,
+        pharmacy.DISTRICT,
+        pharmacy.SECTOR,
+        pharmacy.CELL
+      ]
+      .some((field) => field?.toLowerCase().includes(searchQuery.toLowerCase()))
     );
 
     setFilteredPharmacies(filtered);
@@ -115,18 +121,13 @@ export default function Home() {
 
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 mt-10">
         <h2 className="text-2xl font-semibold text-gray-800 mb-4">
-          {searchQuery ? `Results Found (${filteredPharmacies.length})` : "Available Licensed Pharmacies in Rwanda"}
+          {searchQuery ? `Results Found (${filteredPharmacies.length})` : "All Licensed Pharmacies in Rwanda"}
         </h2>
 
+        {/* Loading Spinner */}
         {loading ? (
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
-            {[...Array(itemsPerPage)].map((_, index) => (
-              <div key={index} className="bg-white shadow-md rounded-lg p-6 animate-pulse">
-                <div className="h-24 bg-gray-300 rounded"></div>
-                <div className="h-6 bg-gray-300 rounded mt-4 w-3/4"></div>
-                <div className="h-4 bg-gray-300 rounded mt-2 w-1/2"></div>
-              </div>
-            ))}
+          <div className="flex justify-center items-center py-16">
+            <ClipLoader color="#1D4ED8" loading={loading} size={50} />
           </div>
         ) : displayedPharmacies.length > 0 ? (
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
@@ -135,15 +136,34 @@ export default function Home() {
             ))}
           </div>
         ) : (
-          <div className="flex flex-col items-center justify-center text-center mt-10">
-            <svg className="w-16 h-16 text-gray-400 animate-bounce" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 9h.01M15 9h.01M9 15h6M5 5l14 14" />
-            </svg>
-            <p className="text-lg text-gray-700 font-semibold mt-4">No pharmacies found.</p>
-            <p className="text-gray-500">Try searching with a different keyword.</p>
+          <div className="text-center py-16">
+            <FiSearch className="text-gray-400 mx-auto" size={50} />
+            <p className="text-gray-600 mt-4 text-lg">No pharmacies found. Try searching with different keywords.</p>
           </div>
         )}
       </div>
+
+      {filteredPharmacies.length > 0 && (
+        <div className="flex justify-center items-center space-x-4 mt-6">
+          <button
+            onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
+            disabled={currentPage === 1}
+            className="px-4 py-2 bg-blue-600 text-white rounded-lg disabled:bg-gray-400 disabled:cursor-not-allowed"
+          >
+            Previous
+          </button>
+          <span className="text-lg text-gray-700">
+            Page {currentPage} of {totalPages}
+          </span>
+          <button
+            onClick={() => setCurrentPage((prev) => Math.min(prev + 1, totalPages))}
+            disabled={currentPage === totalPages}
+            className="px-4 py-2 bg-blue-600 text-white rounded-lg disabled:bg-gray-400 disabled:cursor-not-allowed"
+          >
+            Next
+          </button>
+        </div>
+      )}
 
       <section className="mt-10">
         <Footer />
