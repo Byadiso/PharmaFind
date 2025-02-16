@@ -8,6 +8,9 @@ import PharmacyDetailPage from "./pages/PharmacyDetailPage";
 import CreatePharmacyForm from "./components/CreatePharmacyForm ";
 import PdfTableExtractor from "./Helper/UploadPharmacies";
 import UploadPharmacies from "./Helper/UploadPharmacies";
+import About from "./pages/About";
+import FAQ from "./pages/FAQ";
+import Contact from "./pages/Contact";
 
 function App() {
   return (
@@ -19,7 +22,21 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<SignUp />} />
 
-        <Route path="/uploadJSON" element={<UploadPharmacies />} /> 
+        <Route path="/about" element={<About />} />
+        <Route path="/faq" element={<FAQ />} />
+        <Route path="/Contact" element={<Contact />} />
+
+        
+
+        {/* <Route path="/uploadJSON" element={<UploadPharmacies />} />  */}
+        <Route
+          path="/uploadJSON"
+          element={
+            <ProtectedRoute>
+              <UploadPharmacies />
+            </ProtectedRoute>
+          }
+        />
         <Route
           path="/admin"
           element={

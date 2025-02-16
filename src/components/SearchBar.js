@@ -35,7 +35,7 @@ export default function SearchBar({ onSearch, message }) {
       <form onSubmit={handleSubmit} className="flex items-center gap-4">
         <input
           type="text"
-          placeholder="Search for pharmacies or drugs..."
+          placeholder="Enter your city or name of pharmacy..."
           value={searchTerm}
           onChange={handleInputChange}
           className="w-full p-3 border-2 border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all placeholder-gray-500 text-gray-900" // Added text color and placeholder color
