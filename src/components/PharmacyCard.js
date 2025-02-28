@@ -28,11 +28,7 @@ const PharmacyCard = ({ pharmacy }) => {
           <span>{pharmacy.PHONE_NUMBER || "N/A"}</span>
         </div>
 
-        <div className="flex items-center space-x-2 text-sm text-gray-600">
-          <span className="font-semibold text-gray-700">Stock:</span>
-          <span>{pharmacy.STOCK > 0 ? `${pharmacy.STOCK} items` : "Out of stock"}</span>
-        </div>
-
+       
         {/* View Details Button - Wrapped in Link for navigation */}
         <div className="text-center">
           <Link to={`/pharmacy/${pharmacy.id}`}>

@@ -2,8 +2,11 @@ import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import { FiTarget, FiHeart, FiTrendingUp, FiUsers, FiShield } from "react-icons/fi";
 import aboutImage from "../assets/pharmacy.jpeg";
+import { useNavigate } from "react-router-dom";
 
 export default function About() {
+  const navigate = useNavigate();
+
   return (
     <div className="bg-gray-100 min-h-screen">
       <Navbar />
@@ -85,7 +88,7 @@ export default function About() {
           <p className="text-gray-600 mt-2">
             Whether you're a pharmacy owner or someone in need of a trusted pharmacy, we’re here to help.
           </p>
-          <button className="mt-6 px-6 py-3 bg-blue-600 text-white font-semibold rounded-lg shadow-md hover:bg-gray-200 hover:text-blue-600 transition">
+          <button onClick={() => navigate("/contact")} className="mt-6 px-6 py-3 bg-blue-600 text-white font-semibold rounded-lg shadow-md hover:bg-gray-200 hover:text-blue-600 transition">
             Get Started
           </button>
         </div>
