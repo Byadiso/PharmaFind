@@ -68,13 +68,13 @@ export default function Home() {
     {
       icon: FiGlobe,
       iconColor: "text-blue-600",
-      value: uniqueProvinces,
+      value: uniqueProvinces-1,
       label: "Provinces Covered",
     },
     {
       icon: FiGlobe,
       iconColor: "text-blue-600",
-      value: uniqueDistricts,
+      value: uniqueDistricts-1,
       label: "Districts Covered",
     },
     {
