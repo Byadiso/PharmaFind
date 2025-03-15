@@ -1,7 +1,6 @@
 import { useState } from "react";
 import { collection, addDoc } from "firebase/firestore";
 import { db } from "../firebase";
-import { FaTimes } from "react-icons/fa"; // Import close icon
 import { useNavigate } from "react-router-dom";
 import Navbar from "./Navbar";
 

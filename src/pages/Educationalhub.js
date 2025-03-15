@@ -19,21 +19,21 @@ const EducationalHub = () => {
           <p className="text-gray-600 mt-2">
             Understand the laws and regulations that govern pharmacies in Rwanda.
           </p>
-          <a href="#" className="text-blue-600 mt-4 inline-block">Learn More</a>
+          <a href="/" className="text-blue-600 mt-4 inline-block">Learn More</a>
         </div>
         <div className="bg-white p-6 rounded-lg shadow-md">
           <h3 className="text-xl font-semibold text-gray-800">Licensing Process</h3>
           <p className="text-gray-600 mt-2">
             Learn about the licensing process for starting or operating a pharmacy in Rwanda.
           </p>
-          <a href="#" className="text-blue-600 mt-4 inline-block">Learn More</a>
+          <a href="/" className="text-blue-600 mt-4 inline-block">Learn More</a>
         </div>
         <div className="bg-white p-6 rounded-lg shadow-md">
           <h3 className="text-xl font-semibold text-gray-800">Pharmacy Services</h3>
           <p className="text-gray-600 mt-2">
             Explore the various services provided by pharmacies in Rwanda, such as healthcare consultations and medication delivery.
           </p>
-          <a href="#" className="text-blue-600 mt-4 inline-block">Learn More</a>
+          <a href="/" className="text-blue-600 mt-4 inline-block">Learn More</a>
         </div>
       </div>
 

@@ -6,7 +6,6 @@ import ProtectedRoute from "./components/ProtectedRoute";
 import AdminDashboard from "./pages/AdminDashboard";
 import PharmacyDetailPage from "./pages/PharmacyDetailPage";
 import CreatePharmacyForm from "./components/CreatePharmacyForm ";
-import PdfTableExtractor from "./Helper/UploadPharmacies";
 import UploadPharmacies from "./Helper/UploadPharmacies";
 import About from "./pages/About";
 import FAQ from "./pages/FAQ";
@@ -41,7 +40,7 @@ function App() {
 
         
 
-        {/* <Route path="/uploadJSON" element={<UploadPharmacies />} />  */}
+        
         <Route
           path="/uploadJSON"
           element={

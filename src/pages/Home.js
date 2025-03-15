@@ -1,19 +1,18 @@
-import { useEffect, useState, useMemo, useRef } from "react";
+import { useEffect, useState, useMemo } from "react";
 import { collection, getDocs } from "firebase/firestore";
 import { db } from "../firebase";
-import { FiHome, FiGlobe, FiSearch, FiHeart, FiPlus } from "react-icons/fi";
-import { HiArrowLeft } from "react-icons/hi"; // Import back arrow icon
+import { FiHome, FiGlobe, FiSearch } from "react-icons/fi";
+
 import Navbar from "../components/Navbar";
 import SearchBar from "../components/SearchBar";
 import PharmacyCard from "../components/PharmacyCard";
 import Footer from "../components/Footer";
 import heroImage from "../assets/pharmacy.jpeg";
 import { ClipLoader } from "react-spinners";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import ExtraFeatureLinks from "../components/ExtraFeatures";
 import Pagination from "../components/Pagination";
 import StatisticsSection from "../components/StatisticsSection";
-import MapComponent from "../components/MapComponent";
 
 export default function Home() {
   const [pharmacies, setPharmacies] = useState([]);
@@ -145,7 +144,7 @@ export default function Home() {
     if (currentPage > totalPages) {
       setCurrentPage(1);
     }
-  }, [filteredPharmacies, totalPages]);
+  }, [filteredPharmacies, totalPages, currentPage]);
 
   const displayedPharmacies = useMemo(() => {
     const startIndex = (currentPage - 1) * itemsPerPage;

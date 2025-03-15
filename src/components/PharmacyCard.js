@@ -1,5 +1,5 @@
-import { FiMapPin, FiPhone, FiClock, FiHeart } from "react-icons/fi";
-import { Link } from "react-router-dom"; // Import Link from react-router-dom
+import { FiMapPin, FiPhone, FiClock } from "react-icons/fi";
+import { Link } from "react-router-dom"; 
 
 const PharmacyCard = ({ pharmacy }) => {
   return (

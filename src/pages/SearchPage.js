@@ -1,18 +1,16 @@
 import { useEffect, useState, useMemo } from "react";
 import { collection, getDocs } from "firebase/firestore";
 import { db } from "../firebase";
-import { FiHome, FiGlobe, FiSearch, FiHeart, FiPlus } from "react-icons/fi";
-import { HiArrowLeft } from "react-icons/hi"; // Import back arrow icon
+import { FiSearch } from "react-icons/fi";
+
 import Navbar from "../components/Navbar";
 import SearchBar from "../components/SearchBar";
 import PharmacyCard from "../components/PharmacyCard";
 import Footer from "../components/Footer";
 import heroImage from "../assets/pharmacy.jpeg";
 import { ClipLoader } from "react-spinners";
-import { Link } from "react-router-dom";
-import ExtraFeatureLinks from "../components/ExtraFeatures";
 import Pagination from "../components/Pagination";
-import StatisticsSection from "../components/StatisticsSection";
+
 
 export default function SearchPage() {
   const [pharmacies, setPharmacies] = useState([]);
@@ -25,6 +23,8 @@ export default function SearchPage() {
   const [uniqueProvinces, setUniqueProvinces] = useState(0);
   const [uniqueDistricts, setUniqueDistricts] = useState(0);
   const [uniqueSectors, setUniqueSectors] = useState(0);
+
+  console.log(totalPharmacies,uniqueProvinces, uniqueDistricts, uniqueSectors)
 
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 6;
@@ -54,33 +54,7 @@ export default function SearchPage() {
     return province;
   };
 
-  // Statistics data
-  const statsData = [
-    {
-      icon: FiHome,
-      iconColor: "text-blue-600",
-      value: totalPharmacies,
-      label: "Total Pharmacies",
-    },
-    {
-      icon: FiGlobe,
-      iconColor: "text-green-600",
-      value: uniqueProvinces,
-      label: "Provinces Covered",
-    },
-    {
-      icon: FiGlobe,
-      iconColor: "text-blue-600",
-      value: uniqueDistricts,
-      label: "Districts Covered",
-    },
-    {
-      icon: FiGlobe,
-      iconColor: "text-orange-600",
-      value: uniqueSectors,
-      label: "Sectors Covered",
-    },
-  ];
+   
 
   useEffect(() => {
     const fetchPharmacies = async () => {
@@ -142,7 +116,7 @@ export default function SearchPage() {
     if (currentPage > totalPages) {
       setCurrentPage(1);
     }
-  }, [filteredPharmacies, totalPages]);
+  }, [filteredPharmacies, totalPages, currentPage]);
 
   const displayedPharmacies = useMemo(() => {
     const startIndex = (currentPage - 1) * itemsPerPage;

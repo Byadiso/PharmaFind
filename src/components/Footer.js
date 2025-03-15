@@ -46,13 +46,13 @@ export default function Footer() {
 
         {/* Social Media */}
         <div className="flex justify-center mt-8 space-x-6">
-          <a href="#" className="text-gray-300 hover:text-white transition">
+          <a href="/" className="text-gray-300 hover:text-white transition">
             <FiFacebook size={24} />
           </a>
-          <a href="#" className="text-gray-300 hover:text-white transition">
+          <a href="/" className="text-gray-300 hover:text-white transition">
             <FiTwitter size={24} />
           </a>
-          <a href="#" className="text-gray-300 hover:text-white transition">
+          <a href="/" className="text-gray-300 hover:text-white transition">
             <FiInstagram size={24} />
           </a>
         </div>
