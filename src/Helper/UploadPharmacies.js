@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { db } from '../firebase';
-import { collection, addDoc } from 'firebase/firestore';
+import { collection, addDoc, query, where, getDocs, setDoc, doc } from 'firebase/firestore';
 import { Link } from 'react-router-dom';
 
 const UploadPharmacies = () => {
@@ -19,8 +19,19 @@ const UploadPharmacies = () => {
       const pharmaciesRef = collection(db, 'pharmacies');
       
       for (let pharmacy of pharmaciesData) {
-        await addDoc(pharmaciesRef, pharmacy);
-        console.log(`Pharmacy ${pharmacy['SN']} uploaded successfully.`);
+        const q = query(pharmaciesRef, where('SN', '==', pharmacy['SN']));
+        const querySnapshot = await getDocs(q);
+
+        if (querySnapshot.empty) {
+          // If the pharmacy doesn't exist, add a new one
+          await addDoc(pharmaciesRef, pharmacy);
+          console.log(`Pharmacy ${pharmacy['SN']} uploaded successfully.`);
+        } else {
+          // If the pharmacy exists, update it
+          const docSnap = querySnapshot.docs[0]; // Assuming first match is the correct one
+          await setDoc(doc(db, 'pharmacies', docSnap.id), pharmacy);
+          console.log(`Pharmacy ${pharmacy['SN']} updated successfully.`);
+        }
       }
 
       setSuccess(true);
@@ -36,7 +47,7 @@ const UploadPharmacies = () => {
     <div className="flex items-center justify-center min-h-screen bg-gradient-to-r from-blue-500 to-indigo-600 p-6">
       <div className="bg-white shadow-lg rounded-2xl p-8 w-full max-w-lg text-center">
         <h1 className="text-2xl font-semibold text-gray-800 mb-6">Upload Pharmacies Data</h1>
-        <p className="text-gray-600 mb-4">Click the button below to upload pharmacy records to the database.</p>
+        <p className="text-gray-600 mb-4">Click the button below to upload or update pharmacy records to the database.</p>
         
         <button 
           onClick={loadAndUploadData}
@@ -57,7 +68,7 @@ const UploadPharmacies = () => {
           )}
         </button>
 
-        {success && <p className="mt-4 text-green-600 font-semibold">All pharmacies uploaded successfully!</p>}
+        {success && <p className="mt-4 text-green-600 font-semibold">All pharmacies uploaded or updated successfully!</p>}
         {error && <p className="mt-4 text-red-600 font-semibold">{error}</p>}
         {loading && !error && <p className="mt-4 text-gray-700">Uploading data... Please wait.</p>}
 
